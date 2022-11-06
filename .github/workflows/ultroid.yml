@@ -74,7 +74,7 @@ jobs:
       - name: Run Ultroid
         continue-on-error: false
         run: |
-          git clone ${{ secrets.CREDS }} ultroid/.env
+          git clone https://${{ secrets.GitHubName }}:${{ secrets.GH_TOKEN }}@${{ secrets.CREDS }} ultroid
           sudo bash action.sh
       - name: Loop workflow
         continue-on-error: false
