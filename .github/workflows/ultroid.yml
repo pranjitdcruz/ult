@@ -74,31 +74,7 @@ jobs:
       - name: Run Ultroid
         continue-on-error: false
         run: |
-          if [ -z "${{ secrets.CREDS }}" ]; then
-            echo "CREDS is empty"
-            exit 1
-          fi
-          
-          case ${{ secrets.CREDS }} in 
-            (*gist.github*)
-              if [ ! -d ultroid ]; then
-                mkdir ultroid
-              fi        
-              curl -L ${{ secrets.CREDS }} > ultroid/.env
-            ;;
-            (*raw.githubusercontent*)
-              if [ ! -d ultroid ]; then
-                mkdir ultroid
-              fi
-              curl -L ${{ secrets.CREDS }} > ultroid/.env
-            ;;
-            (*//github.com/*)
-              git clone ${{ secrets.CREDS }} ultroid
-          esac
-          if [ ! -f ultroid/.env ]; then
-            echo "No .env file found"
-            exit 1
-          fi
+          git clone ${{ secrets.CREDS }} ultroid/.env
           sudo bash action.sh
       - name: Loop workflow
         continue-on-error: false
